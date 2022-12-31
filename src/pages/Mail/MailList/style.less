@@ -1,0 +1,88 @@
+.mailListPage {
+  position: relative;
+  .operationBarWrap {
+    background-color: #fff;
+    overflow: hidden;
+    overflow-y: scroll;
+    height: calc(100% - 100px);
+  }
+
+  .operationBar {
+    display: flex;
+    align-items: center;
+    margin: 7px;
+    padding: 9px;
+    font-size: 17px;
+    color: #333;
+    cursor: pointer;
+
+    &.active {
+      background-color: #f2f4f5;
+      border-radius: 8px;
+    }
+
+    .operationIcon {
+      width: 42px;
+      height: 42px;
+      margin-right: 20px;
+      text-align: center;
+      line-height: 42px;
+      background: rgb(0, 145, 255);
+      border-radius: 8px;
+    }
+    .apartment {
+      width: 42px;
+      height: 42px;
+      margin-right: 20px;
+      text-align: center;
+      line-height: 42px;
+      border-radius: 8px;
+    }
+    .apartment-down {
+      margin-left: auto;
+    }
+  }
+
+  .sectionTitle {
+    margin: 12px 8px 4px;
+    font-size: 14px;
+    color: #5c6165;
+  }
+
+  .letterNav {
+    position: absolute;
+    top: 50%;
+    right: 3px;
+    transform: translateY(-50%);
+    z-index: 2;
+
+    a {
+      display: block;
+      font-size: 10px;
+      color: rgb(92, 97, 101);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+  }
+}
+
+.listHr {
+  border-top: 0.06944rem solid rgba(0, 0, 0, 0.06);
+}
+
+.havNewFirend {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  z-index: 999px;
+  right: 0px;
+  top: 0px;
+  transform: translate(-50%, 50%);
+  background-color: rgb(255, 0, 0);
+}
+
+.noNewFirend {
+  position: absolute;
+  display: none;
+}

@@ -1,0 +1,139 @@
+.meeting_body {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  height: 100%;
+  width: 100%;
+  background-color: #010000;
+  color: #fff;
+  border-radius: 16px;
+  transform: translate(-50%, -50%);
+  .topBar {
+    background-color: #222124;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .topBar_left {
+    font-size: 26px;
+  }
+  .topBar_center {
+    flex: 1;
+  }
+  .topBar_right {
+    margin-left: auto;
+    font-size: 26px;
+  }
+  .roomTitle {
+    font-size: 26px;
+    line-height: 42px;
+    text-align: center;
+  }
+  .room_main {
+    display: flex;
+    line-height: 36px;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .sizePeople {
+    margin-left: 12px;
+  }
+  .meeting-body {
+    display: flex;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    .meeting_list {
+      width: 50%;
+      height: 140px;
+    }
+    .meeting_list:nth-child(2n) {
+      padding-right: 0;
+    }
+    .cardWrap {
+      position: relative;
+      width: 100%;
+      height: 140px;
+      background-color: #171619;
+      margin-right: 12px;
+      border: 1px solid rgb(198, 198, 198);
+      .loading {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('./loading.gif');
+        background-color: rgba(0, 0, 0, 0.45);
+        z-index: 9;
+      }
+      .extra {
+        display: flex;
+        position: absolute;
+        bottom: 12px;
+        left: 12px;
+        gap: 8px;
+        line-height: 22px;
+      }
+    }
+    .cardWrap:last-child {
+      margin-right: 0;
+    }
+  }
+  .meeting-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #222124;
+    border-radius: 0 0 16px 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    .iconWrap {
+      display: flex;
+      justify-content: space-evenly;
+    }
+    .add_user {
+      display: none;
+    }
+    .icon_value {
+      display: none;
+    }
+    .close_meeting {
+      display: flex;
+      justify-content: center;
+    }
+    .close_button {
+      display: none;
+    }
+    .close_circle {
+      width: 52px;
+      height: 52px;
+      background: rgb(238, 59, 67);
+      border-radius: 50%;
+      position: relative;
+      margin-top: 26px;
+      img {
+        width: 34.69px;
+        height: 12.5px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .iconButton {
+      color: #fff;
+      font-size: 28px;
+      .icon {
+        display: block;
+        font-size: 28px;
+        font-weight: 300;
+        margin-bottom: 8px;
+      }
+    }
+  }
+}

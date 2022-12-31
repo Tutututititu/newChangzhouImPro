@@ -1,0 +1,93 @@
+.globalSearchPage {
+  z-index: 9999;
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 385px;
+  max-height: 570px;
+  overflow-y: auto;
+  padding-top: 12px;
+  background-color: #fff;
+  overflow: auto;
+  box-sizing: border-box;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.09);
+  border-radius: 4px;
+  // z-index: 5;
+
+  .emptyTipArea {
+    padding: 15% 0;
+    text-align: center;
+    // color: #999;
+    background-color: #fff;
+
+    .emptyIcon {
+      margin-bottom: 12px;
+    }
+  }
+
+  .messageBox {
+    margin-bottom: 12px;
+    padding: 12px 12px 16px;
+    background-color: #fff;
+  }
+
+  .ant-tabs-tab {
+    margin-left: 32px;
+  }
+  // .adm-list-header {
+  //   margin-left: 12px;
+  //   border-bottom: 1px solid rgba(0,0,0,0.04);
+  //   font-size: 13px;
+  // }
+  // .adm-tabs-tab-list {
+  //   border-bottom: 0;
+  // }
+  // .adm-tabs-content {
+  //   height: calc(100% - 94px);
+  //   padding: 0;
+  //   // background-color: rgba(245,245,245,1);
+  // }
+  // .adm-list {
+  //   max-height: calc(100% - 94px);
+  //   background-color: #fff;
+  //   overflow-y: scroll;
+  // }
+
+  .userName {
+    color: rgba(0, 0, 0, 0.45);
+  }
+
+  .userMessage {
+    // white-space: pre-wrap !important;
+    line-height: 1.9;
+  }
+
+  .briefInfoBar {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+
+    .time {
+      float: right;
+    }
+  }
+
+  .messageSource {
+    display: inline-block;
+    padding: 4px 16px;
+    font-size: 13px;
+    color: #0091ff;
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    border-radius: 4px;
+  }
+
+  .searchContent {
+    word-break: break-all;
+
+    em {
+      color: #0091ff;
+      font-style: normal;
+    }
+  }
+}

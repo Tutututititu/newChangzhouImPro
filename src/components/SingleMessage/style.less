@@ -1,0 +1,198 @@
+.chatRecordComponent {
+  cursor: pointer;
+
+  .titleBar {
+    padding-bottom: 8px;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+  }
+
+  .content {
+    margin-top: 8px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.45);
+    line-height: 18px;
+  }
+}
+
+.replyComponent {
+  .resourceMessage {
+    margin-bottom: 14px;
+    padding-left: 6px;
+    border-left: 2px solid rgba(0, 0, 0, 0.09);
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.45);
+    line-height: 16px;
+  }
+
+  .content {
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.09);
+  }
+}
+
+.strongRemainerComponent {
+  .content {
+    margin-bottom: 12px;
+  }
+
+  .replyBtn {
+    padding-top: 12px;
+    text-align: center;
+    font-size: 16px;
+    color: #0091ff;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .badge {
+    position: relative;
+  }
+}
+
+.dingReplyPopoverComponent {
+  .adm-popup-body {
+    border-radius: 8px 8px 0 0;
+    background-color: #f5f5f5;
+  }
+
+  .btnsTitle {
+    padding: 18px 0;
+    font-weight: 400;
+    text-align: center;
+    font-size: 15px;
+    color: #999;
+    background-color: #fff;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .btnBar {
+    padding: 16px 0;
+    text-align: center;
+    border-top: 1px solid #e5e5e5;
+    color: #333;
+    font-size: 18px;
+    background-color: #fff;
+  }
+
+  .cancelBar {
+    margin-top: 8px;
+    padding: 16px 0;
+    text-align: center;
+    color: #333;
+    font-size: 18px;
+    background-color: #fff;
+  }
+}
+
+.dingReplyComponent {
+  .dingSourceMessage {
+    margin-top: 8px;
+    padding-left: 8px;
+    border-left: 2px solid rgba(0, 0, 0, 0.09);
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+.recallComponent {
+  position: relative;
+  left: 50%;
+  display: inline-block;
+  margin: 20px auto 0;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  background-color: #fff;
+  border-radius: 6px;
+  transform: translateX(-50%);
+}
+
+.voiceComponent.rightVoice {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+
+  .pauseIcon {
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+    background-image: url('https://gw.alipayobjects.com/mdn/rms_8dc4fa/afts/img/A*NoUNQ5PTVI8AAAAAAAAAAAAAARQnAQ');
+    background-size: cover;
+  }
+
+  .playingIcon {
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+    background-image: url('https://gw.alipayobjects.com/mdn/rms_8dc4fa/afts/img/A*RRLaRZWkSDsAAAAAAAAAAAAAARQnAQ');
+    background-size: cover;
+  }
+}
+
+.voiceComponent.leftVoice {
+  display: flex;
+  text-align: left;
+  align-items: center;
+
+  .pauseIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    background-image: url('https://gw.alipayobjects.com/mdn/rms_8dc4fa/afts/img/A*66okSpR5DCMAAAAAAAAAAAAAARQnAQ');
+    background-size: cover;
+  }
+
+  .playingIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    background-image: url('https://gw.alipayobjects.com/mdn/rms_8dc4fa/afts/img/A*WDJTSrgMx_4AAAAAAAAAAAAAARQnAQ');
+    background-size: cover;
+  }
+}
+
+.fileComponent {
+  width: 264px;
+
+  .fileName {
+    display: box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    white-space: normal;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}
+
+.bigIcon {
+  img {
+    width: 80%;
+  }
+
+  .ant-image-preview-operations-icon {
+    font-size: 30px !important;
+  }
+}
+
+.unRead {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin: 3px;
+  margin-bottom: 8px;
+  background-color: rgb(255, 255, 255);
+}
+
+.newRead {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin: 3px;
+  margin-bottom: 8px;
+  background-color: rgb(8, 151, 0);
+}

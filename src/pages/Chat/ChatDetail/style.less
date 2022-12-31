@@ -1,0 +1,223 @@
+.chatDetailPage {
+  position: relative;
+  height: 100%;
+  padding-top: 64px;
+  padding-bottom: 120px;
+  box-sizing: border-box;
+  display: flex;
+  // background: #f2f4f5;
+  // flex: 1;
+
+  .infinite-scroll-component__outerdiv {
+    width: 100%;
+  }
+
+  &.onBottomStrech {
+    padding-bottom: 190px;
+  }
+
+  .messageBox {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 160px);
+    overflow-y: auto;
+  }
+
+  .am-list-body {
+    background: transparent;
+    border: none;
+    overflow: auto;
+  }
+
+  .timeBar {
+    margin-top: 16px;
+    font-size: 14px;
+    color: rgb(0, 0, 0, 0.45);
+    line-height: 22px;
+    text-align: center;
+    background-color: transparent;
+  }
+
+  .leftWrap,
+  .rightWrap {
+    overflow: hidden;
+
+    &:hover {
+      .messageOperationsComponent {
+        display: block;
+      }
+    }
+  }
+
+  .leftWrap .messageOperationsComponent {
+    right: -80px;
+  }
+
+  .rightWrap .messageOperationsComponent {
+    left: -80px;
+  }
+
+  .message {
+    display: inline-block;
+    // max-width: 100%;
+    max-width: max-content;
+    margin-bottom: 12px;
+    font-size: 16px;
+    line-height: 24px;
+    word-break: break-word;
+    text-overflow: hidden;
+  }
+
+  .messageSelectCheckbox {
+    .ant-checkbox-inner {
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+    }
+  }
+
+  .left {
+    display: flex;
+    align-items: flex-start;
+    max-width: 75%;
+    margin: 16px 12px 0;
+    align-content: top;
+
+    .nickName {
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.45);
+      line-height: 20px;
+    }
+
+    .message {
+      padding: 8px 12px;
+      background-color: rgb(246, 246, 246);
+      border-radius: 0 6px 6px;
+    }
+  }
+
+  .bottomInfo {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.45);
+  }
+
+  .messageWithOperationWrap {
+    position: relative;
+    display: flex;
+
+    .messageOperationsComponent {
+      position: absolute;
+      bottom: 0;
+      display: none;
+    }
+  }
+
+  .haveReadMark.read {
+    color: rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+  }
+
+  .haveReadMark.unread {
+    color: #0091ff;
+    cursor: pointer;
+  }
+
+  .right {
+    display: flex;
+    align-items: flex-start;
+    // justify-content: space-between;
+    justify-content: flex-end;
+    // .isread {
+    //   margin-bottom: 5px;
+    //   margin-left: 3px;
+    //   border-radius: 50%;
+    //   width: 6px;
+    //   height: 6px;
+    //   display: inline-block;
+    //   background-color: rgb(0, 255, 106);
+    // }
+
+    // .unIsRead {
+    //   margin-bottom: 5px;
+    //   margin-left: 3px;
+    //   border-radius: 50%;
+    //   width: 6px;
+    //   height: 6px;
+    //   display: inline-block;
+    //   background-color: rgb(255, 255, 255);
+    // }
+  }
+
+  .leftContent {
+    max-width: 55%;
+
+    .hightColor {
+      background-color: #1677ff;
+      color: azure;
+    }
+
+    .messageWithOperationWrap {
+      .message {
+        .ant-card-head {
+          max-width: 600px;
+        }
+
+        div {
+          p {
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .rightContent {
+    float: right;
+    max-width: 45%;
+    margin: 16px 12px;
+
+    .message {
+      float: right;
+      background-color: #cce9ff;
+      padding: 8px 12px;
+      border-radius: 6px 0 6px 6px;
+    }
+
+    .bottomInfo {
+      clear: both;
+      text-align: right;
+    }
+
+    .messageWithOperationWrap {
+      flex-direction: row-reverse;
+
+      .message {
+        .ant-card-head {
+          max-width: 600px;
+        }
+
+        div {
+          p {
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.ffffff {
+  z-index: 999999;
+  background-color: rgb(42, 19, 19);
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
+}
