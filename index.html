@@ -1488,7 +1488,7 @@
         track.stop();
       });
       document.getElementById('publish_video1').srcObject = null;
-      // changeStream();
+      changeStream();
     })
 
 
@@ -1984,7 +1984,7 @@
     //动态切流
     function changeStream() {
       let sid = document.getElementById('publish_video1').name;
-      publish_device = parseInt($("#publish_device").val());
+      publish_device = parseInt($("#publish_device").val()); // 发布类型
       let video_profile_type = $("#video_profile_type").val();
 
       //先只支持摄像头的切换
@@ -1999,7 +1999,7 @@
         } else {
           config.video_profile_type = video_profile_type;
         }
-        setMediaInfo(config);
+        // setMediaInfo(config);
         test_controller.ChangeProfile(config);
       }
     }
