@@ -518,7 +518,7 @@
 
     //设置元素隐藏
     window.alwaysNone = function (c_Str) {
-      document.all(c_Str).style.display = 'none';
+      document.all(c_Str).style.display = 'none'
     }
 
     //调整publish_device2的值
@@ -1463,8 +1463,11 @@
 
     //切换前后摄像头
     $('#switchCamera').on('touchend', function () {
+      alert('yes')
       let deviceId = $('#videoSource').val();
+      console.log(deviceId, '我是deviceId');
       let options = $('#videoSource option');
+      console.log(options, '我是options');
       let label;
       let newDeviceId = deviceId;
       for (let i = 0; i < options.length; i++) {
@@ -1479,12 +1482,13 @@
         }
       };
       const stream = document.getElementById('publish_video1').srcObject;
+      console.log(stream, 'strea11111111');
       const tracks = stream.getTracks();
       tracks.forEach(function (track) {
         track.stop();
       });
       document.getElementById('publish_video1').srcObject = null;
-      changeStream();
+      // changeStream();
     })
 
 
