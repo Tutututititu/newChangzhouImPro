@@ -1463,24 +1463,24 @@
 
     //切换前后摄像头
     $('#switchCamera').on('touchend', function () {
-      alert('yes')
-      let deviceId = $('#videoSource').val();
-      console.log(deviceId, '我是deviceId');
-      let options = $('#videoSource option');
-      console.log(options, '我是options');
-      let label;
-      let newDeviceId = deviceId;
-      for (let i = 0; i < options.length; i++) {
-        if ($(options[i]).val() == deviceId) {
-          if (i == options.length - 1) {
-            newDeviceId = $(options[0]).val();
-          } else {
-            newDeviceId = $(options[i + 1]).val();
-          }
-          $('#videoSource').val(newDeviceId);
-          break;
-        }
-      };
+      // let deviceId = $('#videoSource').val();
+      // console.log(deviceId, '我是deviceId');
+      // let options = $('#videoSource option');
+      // console.log(options, '我是options');
+      // let label;
+      // let newDeviceId = deviceId;
+      // for (let i = 0; i < options.length; i++) {
+      //   if ($(options[i]).val() == deviceId) {
+      //     if (i == options.length - 1) {
+      //       newDeviceId = $(options[0]).val();
+      //     } else {
+      //       newDeviceId = $(options[i + 1]).val();
+      //     }
+      //     $('#videoSource').val(newDeviceId);
+      //     break;
+      //   }
+      // };
+      alert('y1')
       const stream = document.getElementById('publish_video1').srcObject;
       console.log(stream, 'strea11111111');
       const tracks = stream.getTracks();
@@ -1488,7 +1488,38 @@
         track.stop();
       });
       document.getElementById('publish_video1').srcObject = null;
-      changeStream();
+      // changeStream();
+      //  -------
+      let sid = document.getElementById('publish_video1').name;
+      publish_device = parseInt($("#publish_device").val()); // 发布类型
+      let video_profile_type = $("#video_profile_type").val();
+
+      //先只支持摄像头的切换 共享要干掉
+      if (sid && publish_device == 1) {
+        let configc = {};
+        configc.sid = sid; // 1
+        console.log(configc, '1111');
+        configc.video_profile_type = video_profile_type; // 1
+        console.log(configc, '2222');
+
+        // setMediaInfo(config);
+        let aspectRatioStrongDepend = document.getElementById("aspect_ratio_strong_depend").checked;
+        let aspectRatio = document.getElementById("aspectRatio").value;
+        let audioSource = audioInputSelect.value;
+        let videoSource = videoSelect.value;
+        configc.aspectRatioStrongDepend = aspectRatioStrongDepend; // 1
+        console.log(configc, '33333');
+
+        configc.aspectRatio = aspectRatio; // 1
+        console.log(configc, '4444');
+
+        configc.audioSource = audioSource; 
+        console.log(configc, '5555');
+
+        configc.videoSource = videoSource; // 1
+        console.log(configc, '整合后的数据');
+        test_controller.ChangeProfile(configc);
+      }
     })
 
 
