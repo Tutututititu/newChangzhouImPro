@@ -175,6 +175,8 @@
     <button id="duet" onclick="duteMode()" class="button blue">&nbsp;&nbsp;双人通话&nbsp;&nbsp;</button>
     <button id="multiplayer" onclick="multiplayerMode()" class="button blue">&nbsp;&nbsp;多人通话&nbsp;&nbsp;</button> -->
   <header class="header">音视频通话</header>
+  <select id="videoSource"
+              ></select>
   <div class="info">
     <table cellspacing="0" cellpadding="0">
       <!--注意事项-->
@@ -326,8 +328,7 @@
             </select>
             <label text="default_turn_server" style="display:none">自定义中转服务器:</label>
             <input type="text" id="default_turn_server" style="width:120px;display:none" placeholder="请输入中转服务" />
-            <label for="videoSource" class="hidden">camera source: </label><select id="videoSource"
-              class="hidden"></select> &nbsp;&nbsp;&nbsp;
+            <label for="videoSource" class="hidden">camera source: </label> &nbsp;&nbsp;&nbsp;
             <label for="audioSource" style="display:none">microphone
               source: </label><select id="audioSource" style="display:none"></select> &nbsp;&nbsp;&nbsp;
             <label for="audioOutput" style="display:none">audio output</label><select id="audioOutput"
