@@ -1466,7 +1466,6 @@
     $('#switchCamera').on('touchend', function () {
       let deviceId = $('#videoSource').val();
       console.log(deviceId, '我是deviceId');
-      return;
       let options = $('#videoSource option');
       console.log(options, '我是options');
       let label;
@@ -1479,7 +1478,7 @@
             newDeviceId = $(options[i + 1]).val();
           }
           $('#videoSource').val(newDeviceId);
-          console.log(newDeviceId, 'wfkeofkeofkoekfo');
+          console.log(newDeviceId, '最后给到的数据, 11111111111');
           break;
         }
       };
