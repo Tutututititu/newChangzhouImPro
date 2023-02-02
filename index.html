@@ -127,10 +127,21 @@
 
             <label text="room_server">房间服务器:</label>&nbsp;
             <select name="select" id="select_room" class="xla_k">
-              <option selected value="wss://artvcroomdev.dl.alipaydev.com/ws">&nbsp;开发环境(主站)&nbsp;</option>
               <option value="wss://artvcroom.alipay.com/ws">&nbsp;生产环境(主站)&nbsp;</option>
+              <option value="wss://artvcroom-gray.alipay.com/ws">&nbsp;灰度环境(主站)&nbsp;</option>
+              <option value="wss://artvcroompre.alipay.com/ws">&nbsp;预发环境(主站)&nbsp;</option>
+              <option value="wss://artvcroom.alipaydev.com/ws">&nbsp;沙箱环境(主站)&nbsp;</option>
+              <option value="wss://artvcroom.test.alipay.net/ws">&nbsp;测试环境(主站-内网访问)&nbsp;</option>
+              <option value="wss://artvcroom-test.dl.alipaydev.com/ws">&nbsp;测试环境(主站)&nbsp;</option>
+              <option selected value="wss://artvcroomdev.dl.alipaydev.com/ws">&nbsp;开发环境(主站)&nbsp;</option>
               <option value="wss://mrtc.mpaas.cn-hangzhou.aliyuncs.com/ws">&nbsp;非金生产(mpaas)&nbsp;</option>
+              <option value="wss://premrtc.mpaas.cn-hangzhou.aliyuncs.com/ws">&nbsp;非金预发(mpaas)&nbsp;</option>
               <option value="wss://room.mrtc-fin.cn-shanghai.aliyuncs.com/ws">&nbsp;金区生产(mpaas)&nbsp;</option>
+              <option value="ws://100.83.22.186:81/ws">&nbsp;测试环境(mpaas云游ake2.0)&nbsp;</option>
+              <option value="wss://app.uat.dsp.hsbcfts.com.cn:443/mpaas/mrtc/ws">&nbsp;汇丰&nbsp;</option>
+              <option value="wss://premrtc-yunyou.mpaas.cn-hangzhou.aliyuncs.com/ws">云游预发(mpaas)</option>
+              <option value="wss://mrtc-yunyou.mpaas.cn-hangzhou.aliyuncs.com/ws">云游线上(mpaas)</option>
+              <option value="ws://11.166.133.5/ws">DEV_PLUS(mpaas)</option>
             </select> &nbsp;
 
             <label text="new_sign:">签名:</label>
@@ -155,7 +166,7 @@
         <div id="a2">
           &nbsp;
           <!-- 房间 -->
-          <label text="room_id:">roomid(房间号1):</label>
+          <label text="room_id:">roomid(房间号):</label>
           <input type="text" id="room_id" placeholder="请输入房间号" style="width:150px;" />&nbsp;
           <label text="rtoken:">rtoken(房间密码):</label>
           <input type="text" id="rtoken" value="123" placeholder="请输入房间密码" style="width:100px;" />&nbsp;
@@ -784,18 +795,34 @@
 <script src="https://gosspublic.alicdn.com/aliyun-oss-sdk-6.17.1.min.js"></script>
 <!-- 此处根据开发和正式版本不同引入方式 -->
 
-<!-- file引用 -->
-<script src="./lib/mcu.js"></script>
-<script src="./lib/meeting_desk_stream.js"></script>
-<script src="./lib/meeting_html_stream.js"></script>
-<script src="./lib/meeting_file_stream.js"></script>
-<script src="./lib/meeting_im.js"></script>
-<script src="./lib/meeting_vod.js"></script>
-<script src="./lib/meeting_invite.js"></script>
-<script src="./lib/client_record.js"></script>
-<script src="./lib/remote_record.js"></script>
-<script src="./lib/meeting_camera_stream.js"></script>
-<script src="./lib/meeting_api.js"></script>
+<!-- es6,本地开发引用 -->
+<script type="module">
+  import DeskStreamController from "./meeting_desk/meeting_desk_stream.js"
+  import HtmlStreamController from "./meeting_html/meeting_html_stream.js"
+  import FileStreamController from "./meeting_file/meeting_file_stream.js"
+  import MeetingIMController from "./meeting_im/meeting_im.js"
+  import MeetingVodController from "./meeting_vod/meeting_vod.js"
+  import MeetingInviteController from "./meeting_invite/meeting_invite.js"
+  import ClientRecordController from "./client_record/client_record.js"
+  import RemoteRecordController from "./remote_record/remote_record.js"
+  import CameraStreamController from "./meeting_camera/meeting_camera_stream.js"
+  import MeetingController from "./meeting_api/meeting_api.js"
+  import McuController from "./mcu.js"
+
+  window.DeskStreamController = DeskStreamController;
+  window.FileStreamController = FileStreamController;
+  window.HtmlStreamController = HtmlStreamController;
+  window.meetingBeautifyStream = meetingBeautifyStream;
+  window.MeetingIMController = MeetingIMController;
+  window.MeetingInviteController = MeetingInviteController;
+  window.ClientRecordController = ClientRecordController;
+  window.RemoteRecordController = RemoteRecordController;
+  window.CameraStreamController = CameraStreamController;
+  window.MeetingVodController = MeetingVodController;
+  window.MeetingController = MeetingController;
+  window.McuController = McuController;
+  window.MeetingVodController = MeetingVodController;
+</script>
 
 
 <script type="module">
@@ -1357,7 +1384,7 @@
       config_param.filePath = $("#record_filePath").val();
     }
     //是否需要实时音量值,默认为false
-    config_param.need_volume_analyser = false;
+    config_param.need_volume_analyser = true;
     // 中转相关
     config_param.transport_ = document.getElementById("transport_").value;
     config_param.defaultTurnServer = document.getElementById("default_turn_server").value;
@@ -1659,7 +1686,7 @@
   // 发布流
   async function publish(count) {
     let config_param = {};
-    config_param.need_volume_analyser = false;
+    config_param.need_volume_analyser = true;
     config_param.publish_video_id = "publish_video" + count;
     config_param.publish_streamId_id = "publish_streamId" + count;
     let video_profile_type = $("#video_profile_type").val();
@@ -1879,13 +1906,20 @@
   };
   //大方会议音频信息
   test_controller.OnMeetingAudioInfo = function (audioArray) {
+    let audio_dom_list = ["audio1", "audio2", "audio3"];
     audioArray.forEach(audio => {
       let { uid, feedId, pub_ssrc, dom_id } = audio;
       console.log(`~~~~~~~~~~~~~ OnMeetingAudioInfo Success Response, uid=${uid},feedId=${feedId}, pub_ssrc=${pub_ssrc}, dom_id=${dom_id}`);
-      $("#" + dom_id).parent().find(".uid").text(uid)
-      $("#" + dom_id).parent().find(".feed_id").text(feedId)
-      $("#" + dom_id).parent().find(".audio_pub_ssrc").text(pub_ssrc)
+      $("#" + dom_id).parent().find(".uid").text(uid);
+      $("#" + dom_id).parent().find(".feed_id").text(feedId);
+      $("#" + dom_id).parent().find(".audio_pub_ssrc").text(pub_ssrc);
+      audio_dom_list.splice(audio_dom_list.indexOf(dom_id), 1);
     });
+    audio_dom_list.forEach(dom_id => {
+      $("#" + dom_id).parent().find(".uid").text("");
+      $("#" + dom_id).parent().find(".feed_id").text("");
+      $("#" + dom_id).parent().find(".audio_pub_ssrc").text("");
+    })
   };
   //有新发布推送,对表格做更新操作
   test_controller.OnNewPublish = function (feed) {
@@ -1933,7 +1967,7 @@
     config_param.subscribe_audio_id = "audio" + index;
     config_param.subscribe_streamId_id = "subscribe_streamId" + index;
     config_param.feedId_id = "feedId" + index;
-    config_param.need_volume_analyser = false;
+    config_param.need_volume_analyser = true;
     config_param.feedId = feedId;
     config_param.subscribeEnableVideo = $('#subscribeEnableVideo').prop("checked");
     config_param.subscribeEnableAudio = $('#subscribeEnableAudio').prop("checked");
@@ -1971,7 +2005,11 @@
     clearInterval(publish_media_stat_timer_id);
     publish_media_stat_timer_id = -1;
     document.getElementById("publish_media_stat1").innerText = "";
-    clearStreamRemain()
+    clearStreamRemain();
+    if (publishVolumeTimerObj[sid] && publishVolumeTimerObj[sid] != -1) {
+      clearInterval(publishVolumeTimerObj[sid]);
+      publishVolumeTimerObj[sid] = -1;
+    }
   };
 
   //取消订阅成功回调
@@ -1979,6 +2017,10 @@
     this.trace(`~~~~~~~~~~~~  OnUnSubscribeSucc  response, sid=${sid}`);
     if (subscribe_media_stat_timer_id != -1) {
       clearInterval(subscribe_media_stat_timer_id);
+    }
+    if (publishVolumeTimerObj[sid] && publishVolumeTimerObj[sid] != -1) {
+      clearInterval(publishVolumeTimerObj[sid]);
+      publishVolumeTimerObj[sid] = -1;
     }
   };
 
@@ -2904,15 +2946,14 @@
       }
     }
   }
-
   //获取音量实时数据,音量可视化
+  let publishVolumeTimerObj = {};
   test_controller.OnVolumeAnalyser = function (sid, analyser, dom_id) {
     let volumeView
     if (dom_id) {
       volumeView = $("#" + dom_id).parent().find(".volumeView").attr("id")
     } else {
       let publish_sid = document.getElementById('publish_video1').name || document.getElementById('publish_streamId1').name;
-      let volumeView;
       if (sid == publish_sid) {
         volumeView = "publish_volumeView";
       } else {
@@ -2926,7 +2967,6 @@
         }
       }
     }
-
     if (!volumeView) {
       return;
     }
@@ -2974,7 +3014,9 @@
     }
 
     draw();
-    requestAnimationFrame(test_controller.OnVolumeAnalyser.bind(this, sid, analyser, dom_id));
+    if (!publishVolumeTimerObj[sid]) {
+      publishVolumeTimerObj[sid] = setInterval(test_controller.OnVolumeAnalyser.bind(this, sid, analyser, dom_id), 100);
+    }
   };
 
   // 开启点播
