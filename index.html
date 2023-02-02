@@ -1384,7 +1384,7 @@
       config_param.filePath = $("#record_filePath").val();
     }
     //是否需要实时音量值,默认为false
-    config_param.need_volume_analyser = true;
+    config_param.need_volume_analyser = false;
     // 中转相关
     config_param.transport_ = document.getElementById("transport_").value;
     config_param.defaultTurnServer = document.getElementById("default_turn_server").value;
@@ -1689,7 +1689,7 @@
   // 发布流
   async function publish(count) {
     let config_param = {};
-    config_param.need_volume_analyser = true;
+    config_param.need_volume_analyser = false;
     config_param.publish_video_id = "publish_video" + count;
     config_param.publish_streamId_id = "publish_streamId" + count;
     let video_profile_type = $("#video_profile_type").val();
@@ -1970,7 +1970,7 @@
     config_param.subscribe_audio_id = "audio" + index;
     config_param.subscribe_streamId_id = "subscribe_streamId" + index;
     config_param.feedId_id = "feedId" + index;
-    config_param.need_volume_analyser = true;
+    config_param.need_volume_analyser = false;
     config_param.feedId = feedId;
     config_param.subscribeEnableVideo = $('#subscribeEnableVideo').prop("checked");
     config_param.subscribeEnableAudio = $('#subscribeEnableAudio').prop("checked");
