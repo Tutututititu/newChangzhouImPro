@@ -128,7 +128,6 @@
             <label text="room_server">房间服务器:</label>&nbsp;
             <select name="select" id="select_room" class="xla_k">
               <option value="wss://artvcroom.alipay.com/ws">&nbsp;生产环境(主站)&nbsp;</option>
-              <option selected value="wss://artvcroomdev.dl.alipaydev.com/ws">&nbsp;开发环境(主站)&nbsp;</option>
               <option value="wss://mrtc.mpaas.cn-hangzhou.aliyuncs.com/ws">&nbsp;非金生产(mpaas)&nbsp;</option>
               <option value="wss://room.mrtc-fin.cn-shanghai.aliyuncs.com/ws">&nbsp;金区生产(mpaas)&nbsp;</option>
             </select> &nbsp;
@@ -246,12 +245,6 @@
 
           <label text="bitrate">发布弱网告警(音频丢包率):</label>
           <input type="text" id="weak_audio_lost_rate" value="20" style="width:30px;" /> &nbsp;
-
-          <label for="degradationType">降级策略:</label>
-          <select name="degradationType" id="degradationType" class="xla_k">
-            <option selected value=1>&nbsp;流畅度优先&nbsp;</option>
-            <option value=2>&nbsp;清晰度优先&nbsp;</option>
-          </select>&nbsp;
 
           <label text="codec_type">传输方式:</label>
           <select name="transport_" id="transport_" class="xla_k">
@@ -1290,7 +1283,6 @@
         setMediaInfo(config_param);
         break;
     }
-    config_param.degradationType = +document.getElementById("degradationType").value;
 
     // 设置录制参数
     config_param.defaultRecord = document.getElementById("defaultRecord").checked;  // 是否默认开始服务端录制,默认为false
@@ -1736,7 +1728,6 @@
     // 自定义中转
     config_param.transport_ = document.getElementById("transport_").value;
     config_param.defaultTurnServer = document.getElementById("default_turn_server").value;
-    config_param.degradationType = +document.getElementById("degradationType").value;
     config_param.scalabilityMode = $("#scalabilityMode").val();
     //业务自己处理sid
     let sid = test_controller.Publish(config_param);
