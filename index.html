@@ -795,6 +795,7 @@
 <script src="https://gosspublic.alicdn.com/aliyun-oss-sdk-6.17.1.min.js"></script>
 <!-- 此处根据开发和正式版本不同引入方式 -->
 
+<!-- es6,本地开发引用 -->
 <script src="./lib/mcu.js"></script>
 <script src="./lib/meeting_desk_stream.js"></script>
 <script src="./lib/meeting_html_stream.js"></script>
@@ -806,34 +807,6 @@
 <script src="./lib/remote_record.js"></script>
 <script src="./lib/meeting_camera_stream.js"></script>
 <script src="./lib/meeting_api.js"></script>
-<!-- es6,本地开发引用 -->
-<!-- <script type="module">
-  import DeskStreamController from "./meeting_desk/meeting_desk_stream.js"
-  import HtmlStreamController from "./meeting_html/meeting_html_stream.js"
-  import FileStreamController from "./meeting_file/meeting_file_stream.js"
-  import MeetingIMController from "./meeting_im/meeting_im.js"
-  import MeetingVodController from "./meeting_vod/meeting_vod.js"
-  import MeetingInviteController from "./meeting_invite/meeting_invite.js"
-  import ClientRecordController from "./client_record/client_record.js"
-  import RemoteRecordController from "./remote_record/remote_record.js"
-  import CameraStreamController from "./meeting_camera/meeting_camera_stream.js"
-  import MeetingController from "./meeting_api/meeting_api.js"
-  import McuController from "./mcu.js"
-
-  window.DeskStreamController = DeskStreamController;
-  window.FileStreamController = FileStreamController;
-  window.HtmlStreamController = HtmlStreamController;
-  window.meetingBeautifyStream = meetingBeautifyStream;
-  window.MeetingIMController = MeetingIMController;
-  window.MeetingInviteController = MeetingInviteController;
-  window.ClientRecordController = ClientRecordController;
-  window.RemoteRecordController = RemoteRecordController;
-  window.CameraStreamController = CameraStreamController;
-  window.MeetingVodController = MeetingVodController;
-  window.MeetingController = MeetingController;
-  window.McuController = McuController;
-  window.MeetingVodController = MeetingVodController;
-</script> -->
 
 
 <script type="module">
@@ -1395,7 +1368,7 @@
       config_param.filePath = $("#record_filePath").val();
     }
     //是否需要实时音量值,默认为false
-    config_param.need_volume_analyser = false;
+    config_param.need_volume_analyser = true;
     // 中转相关
     config_param.transport_ = document.getElementById("transport_").value;
     config_param.defaultTurnServer = document.getElementById("default_turn_server").value;
@@ -1700,7 +1673,7 @@
   // 发布流
   async function publish(count) {
     let config_param = {};
-    config_param.need_volume_analyser = false;
+    config_param.need_volume_analyser = true;
     config_param.publish_video_id = "publish_video" + count;
     config_param.publish_streamId_id = "publish_streamId" + count;
     let video_profile_type = $("#video_profile_type").val();
@@ -1981,7 +1954,7 @@
     config_param.subscribe_audio_id = "audio" + index;
     config_param.subscribe_streamId_id = "subscribe_streamId" + index;
     config_param.feedId_id = "feedId" + index;
-    config_param.need_volume_analyser = false;
+    config_param.need_volume_analyser = true;
     config_param.feedId = feedId;
     config_param.subscribeEnableVideo = $('#subscribeEnableVideo').prop("checked");
     config_param.subscribeEnableAudio = $('#subscribeEnableAudio').prop("checked");
