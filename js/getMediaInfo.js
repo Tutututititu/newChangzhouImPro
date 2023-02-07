@@ -23,7 +23,7 @@ function gotDevices(deviceInfos) {
       option.text = deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`;
       audioOutputSelect.appendChild(option);
     } else if (deviceInfo.kind === "videoinput") {
-      console.log(deviceInfo, '循环的数据');
+      console.log(deviceInfo, '循环的数据1');
       dddd.push(JSON.parse(JSON.stringify(deviceInfo)));
       videoTarget.push(deviceInfo);
       option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
