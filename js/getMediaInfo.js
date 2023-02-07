@@ -10,6 +10,7 @@ function gotDevices(deviceInfos) {
       select.removeChild(select.firstChild);
     }
   });
+  let videoTarget = [];
   for (let i = 0; i !== deviceInfos.length; ++i) {
     let deviceInfo = deviceInfos[i];
     let option = document.createElement("option");
@@ -21,12 +22,14 @@ function gotDevices(deviceInfos) {
       option.text = deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`;
       audioOutputSelect.appendChild(option);
     } else if (deviceInfo.kind === "videoinput") {
+      videoTarget.push(deviceInfo);
       option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
       videoSelect.appendChild(option);
     } else {
       console.log("Some other kind of source/device: ", deviceInfo);
     }
   }
+  console.log(videoTarget, '当前设备');
   selectors.forEach((select, selectorIndex) => {
     if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
       select.value = values[selectorIndex];
