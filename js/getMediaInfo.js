@@ -10,7 +10,7 @@ function gotDevices(deviceInfos) {
       select.removeChild(select.firstChild);
     }
   });
-  let videoTarget = [];
+  window.videoTarget = [];
   for (let i = 0; i !== deviceInfos.length; ++i) {
     let deviceInfo = deviceInfos[i];
     let option = document.createElement("option");
