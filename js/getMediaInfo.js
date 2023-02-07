@@ -29,7 +29,7 @@ function gotDevices(deviceInfos) {
       console.log("Some other kind of source/device: ", deviceInfo);
     }
   }
-  console.log(videoTarget, '当前设备');
+  console.log(videoTarget, '当前设备1');
   selectors.forEach((select, selectorIndex) => {
     if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
       select.value = values[selectorIndex];
