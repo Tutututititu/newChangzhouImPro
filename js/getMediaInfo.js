@@ -11,7 +11,7 @@ function gotDevices(deviceInfos) {
     }
   });
   window.videoTarget = [];
-  window.dddd = [];
+  alert('触发了')
   for (let i = 0; i !== deviceInfos.length; ++i) {
     let deviceInfo = deviceInfos[i];
     let option = document.createElement("option");
@@ -23,9 +23,8 @@ function gotDevices(deviceInfos) {
       option.text = deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`;
       audioOutputSelect.appendChild(option);
     } else if (deviceInfo.kind === "videoinput") {
-      console.log(deviceInfo, '循环的数据1');
-      dddd.push(JSON.parse(JSON.stringify(deviceInfo)));
-      videoTarget.push(deviceInfo);
+      console.log(deviceInfo, '循环的数据');
+      videoTarget.push(JSON.parse(JSON.stringify(deviceInfo)));
       option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
       videoSelect.appendChild(option);
     } else {
@@ -33,7 +32,6 @@ function gotDevices(deviceInfos) {
     }
   }
   console.log(videoTarget, '当前设备1');
-  console.log(dddd, 'fuck');
   selectors.forEach((select, selectorIndex) => {
     if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
       select.value = values[selectorIndex];
@@ -46,6 +44,7 @@ function handleError(error) {
 }
 
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  console.log('我获取了权限')
   navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(stream => {
     stream.getTracks().forEach(t => t.stop());
     fillDeviceList.call(this);
