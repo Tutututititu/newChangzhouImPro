@@ -3,13 +3,17 @@ var audioOutputSelect = document.querySelector("select#audioOutput");
 var videoSelect = document.querySelector("select#videoSource");
 var selectors = [audioInputSelect, audioOutputSelect, videoSelect];
 function gotDevices(deviceInfos) {
+  console.log(1);
   // Handles being called several times to update labels. Preserve values.
   let values = selectors.map(select => select.value);
+  console.log(2);
+
   selectors.forEach(select => {
     while (select.firstChild) {
       select.removeChild(select.firstChild);
     }
   });
+  console.log(3);
   window.videoTarget = [];
   alert('触发了')
   for (let i = 0; i !== deviceInfos.length; ++i) {
@@ -49,7 +53,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     stream.getTracks().forEach(t => t.stop());
     fillDeviceList.call(this);
   }).catch(err => {
-    console.log(err)
+    console.log(err, 'errrrr')
   });
 }
 
