@@ -16,40 +16,6 @@
       width: 30px;
     }
 
-    .subscribeVideo,
-    .subscribeAudio {
-      width: 100%;
-      border: 0.1px solid;
-    }
-
-    .subscribeVideo {
-      height: 650px;
-      overflow-y: scroll;
-    }
-
-    .subscribeAudio {
-      height: 120px;
-      overflow-y: scroll;
-    }
-
-    .subscribeAudio div.data {
-      display: inline-block;
-    }
-
-    .subscribeVideo>div {
-      height: 50%;
-      float: left;
-      width: 25%;
-      border: 0.1px solid;
-    }
-
-    #a5>.subscribeVideo video {
-      width: 80%;
-      height: 100%;
-      display: block;
-      margin: 0 auto;
-    }
-
     #publish_media_stat1 {
       word-wrap: break-word;
       max-width: 640px;
@@ -62,20 +28,17 @@
       display: inline-block;
     }
 
-    .videoBox {
-      position: relative;
-    }
-
-    .ratio {
-      position: absolute;
-      right: 0;
-      bottom: 0;
+    #client_watermark .watermark_format {
+      display: none;
     }
   </style>
   <link rel="stylesheet" type="text/css" href="./lib/dialogue.css">
 </head>
 
 <body>
+  <label type="text" style="color: #3A6EA5">&nbsp;请选择业务模式</label> &nbsp;&nbsp;&nbsp;&nbsp;
+  <button id="duet" onclick="duetMode()" class="button blue">&nbsp;&nbsp;双人通话&nbsp;&nbsp;</button>
+  <button id="multiplayer" onclick="multiplayerMode()" class="button blue">&nbsp;&nbsp;多人通话&nbsp;&nbsp;</button>
   <table border="1" cellspacing="0" cellpadding="0">
     <!--注意事项-->
     <tr>
@@ -114,10 +77,10 @@
           <div id="callstart">
             &nbsp;
             <label text="biz_name:">bizName:</label>
-            <input type="text" id="biz_name" value="meeting" style="width:80px;" />&nbsp;
+            <input type="text" id="biz_name" value="demo" style="width:80px;" />&nbsp;
 
             <label text="sub_biz:">subBiz/appId:</label>
-            <input type="text" id="sub_biz" value="test" style="width:80px;" />&nbsp;
+            <input type="text" id="sub_biz" value="default" style="width:80px;" />&nbsp;
 
             <label text="workspaceId:">workspaceId:</label>
             <input type="text" id="workspaceId" value="default" style="width:70px;" />&nbsp;
@@ -191,6 +154,7 @@
           <label for="recordStrongDepend"><input id="recordStrongDepend" type="checkbox" checked>录制强依赖</label>&nbsp;
           <br>
           <br>&nbsp;
+
           <label text="media_type">发布:</label>
           <input type="checkbox" name="enableAudio" id="enableAudio" checked>&nbsp;audio
           <input type="checkbox" name="enableVideo" id="enableVideo" checked>&nbsp;video
@@ -201,11 +165,12 @@
           <input type="checkbox" name="enableVideo" id="subscribeEnableVideo" checked>&nbsp;video
           <input type="checkbox" name="enableDataChannel" id="subscribeEnableDatachannel">&nbsp;data
           &nbsp;
+
           <label text="publish_tag">发布tag:</label>
-          <input id="publish_tag" type="text" value="VIDEO_SOURCE_CAMERA" style="width:180px;">&nbsp;
+          <input id="publish_tag" type="text" value="VIDEO_SOURCE_CAMERA" style="width:180px;">
+          &nbsp;
 
-
-          <label text="codec_type">编码方式:</label>
+          <label text="codec_type">编码:</label>
           <select name="select_codec" id="select_codec" class="xla_k">
             <option value="AUTO" selected>&nbsp;系统自适应&nbsp;</option>
             <option value="H264">&nbsp;H264&nbsp;</option>
@@ -275,9 +240,6 @@
           <label for="E2EE_ikm">E2EE材料:</label>
           <input type="text" id="E2EE_ikm" value="secret0123456789" style="width:120px;" />&nbsp;
 
-          <label for="simulcast">simulcast</label>
-          <input type="checkbox" id="simulcast">
-
           <label for="scalabilityMode">SVC:</label>
           <select id="scalabilityMode">
 
@@ -290,11 +252,17 @@
             <option value=5>强</option>
           </select>&nbsp;
 
-          <label for="blurSwitch">背景虚化开启</label>
+          <label for="blurSwitch">背景虚化</label>
           <input type="checkbox" id="blurSwitch">
 
           <label for="blurURL">背景虚化图片URL:</label>
           <input type="text" id="blurURL" style="width:200px;">
+          <br><br>&nbsp;
+
+          <label for="rtmpPushUrl">rtmpPushUrl:</label>
+          <input type="text" id="rtmpPushUrl" style="width:200px;">
+          <label for="rtmpPullUrl">rtmpPullUrl:</label>
+          <input type="text" id="rtmpPullUrl" style="width:200px;">
           <br><br>&nbsp;
 
           <label for="videoSource">摄像头设备:</label><select id="videoSource"></select>&nbsp;
@@ -312,16 +280,18 @@
           <label id="join_room_state" type="text" class="css-text-color">否</label>
           <br>&nbsp;
 
-          <input type="text" id="invitee" class="mcu-placeholder" placeholder="请填入被邀请者uid (需在线)" style="width:200px;" />
-          &nbsp;
-          <label class="css-text-color">推送渠道:</label>
+          <label class="css-text-color">渠道:</label>
           <select name="channel_type" id="invitation_channel_type" class="xla_k css-text-color">
             <option value="0" selected>&nbsp;WEB&nbsp;</option>
             <option value="1">&nbsp;ALIPAY&nbsp;</option>
+            <option value="2">&nbsp;SIP&nbsp;</option>
           </select>&nbsp;
-          <input type="text" id="invitation_link" class="mcu-placeholder" placeholder="请填入邀请参数 (WEB不需要)"
-            style="width:200px;" /> &nbsp;
+          <input type="text" id="invitee" class="mcu-placeholder" placeholder="请填入被邀请者" style="width:200px;" />&nbsp;
+          <input type="text" id="invitation_link" class="mcu-placeholder" placeholder="请填入邀请参数 (ALIPAY必填)"
+            style="width:200px;" />&nbsp;
           <button id="inviteButton" class="css-3d-btn">&nbsp;&nbsp;邀请加入房间&nbsp;&nbsp;</button> &nbsp;&nbsp;
+          <input type="checkbox" id="autoReplyInvite" checked />
+          <label for="autoReplyInvite">自动接听</label>
           <label id="invite_state" type="text" style="color:rgba(219, 87, 51, 1)"></label>
         </div>
       </td>
@@ -480,6 +450,56 @@
                     </tr>
                   </table>
                 </td>
+
+                <!--双人音视频订阅窗口-->
+                <td id="duet_subscribe">
+                  <table>
+                    <tr>
+                      <td>
+                        <canvas id="subscribe_volumeView0" width="100" height="100"></canvas>
+                      </td>
+                      <td>
+                        <video id="video0" autoplay muted="true" width="640" height="480" webkit-playsinline="true"
+                          playsinline="true">
+                          video
+                        </video>
+                        <audio id="audio0" autoplay>音频</audio></br>
+
+                        <label id="subscribe_media_stat1" class="css-text-color" type="text"></label>
+                        <br>
+                        <label type="text" id="subscribe_feedId_text0" hidden>&nbsp;&nbsp;feedId:</label>
+                        <label id="feedId0" class="css-text-color" type="text"></label>
+                        <br>
+                        <label type="text" id="subscribe_streamId_text0" hidden>&nbsp;&nbsp;streamId:</label>
+                        <label id="subscribe_streamId0" class="css-text-color" type="text"></label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="css-3d-btn"
+                          onclick="unSubscribeButton(document.getElementById('video0').name || document.getElementById('audio0').name)">
+                          &nbsp;&nbsp;取消&nbsp;&nbsp;
+                        </button> &nbsp;&nbsp;
+                        <button id="video_fullscreen0" class="css-3d-btn img-fullscreen"
+                          onclick="requestFullScreen(document.getElementById('video0'))">
+                          &nbsp;&nbsp;全屏&nbsp;&nbsp;
+                        </button> &nbsp;&nbsp;
+                        <label text="picture_type">截屏图片类型:</label>
+                        <select name="select" id="remote_picture_type0" class="xla_k">
+                          <option value="1">&nbsp;&nbsp;png&nbsp;&nbsp;</option>
+                          <option value="2">&nbsp;&nbsp;jpeg&nbsp;&nbsp;</option>
+                        </select>
+                        <button id="takePictureRemoteBtn0" class="css-3d-btn"
+                          onclick="takePictureRemoteBtn(document.getElementById('video0').name, document.getElementById('remote_picture_type0').value)">
+                          &nbsp;&nbsp;截屏&nbsp;&nbsp;
+                        </button>
+                        <br>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+
               </tr>
             </table>
           </div>
@@ -487,10 +507,90 @@
         <br>
       </td>
     </tr>
+    <!-- 新增发布流 -->
+    <tr>
+      <td>
+        <button id="new_publish_window" class="button green rarrow" onclick="show('a9')" style="width:132px">
+          【新增发布流】
+        </button>
+        <div id="a9" style="display:none">
+          <div>
+            <table>
+              <tr>
+                <td>
+                  <div style="transform:rotateY(180deg);">
+                    <video id="publish_video5" autoplay muted="true" width="640" height="480" webkit-playsinline="true"
+                      playsinline="true"></video><br>
+                  </div>
+                  <label type="text" id="streamId_text5" hidden>streamId:</label>
+                  <label id="publish_streamId5" class="css-text-color" type="text"></label>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <div>
+                    <table>
+                      <tr>
+                        <td>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <label text="publish_device" class="css-text-color">发布类型:</label>
+                          <select name="publish_device" id="publish_device5" class="xla_k css-text-color"
+                            onchange="publishDeviceChange3()">
+                            <option selected value="1">
+                              &nbsp;&nbsp;1.摄像头&nbsp;&nbsp;
+                            </option>
+                            <option value="2">&nbsp;&nbsp;2.共享桌面&nbsp;&nbsp;
+                            </option>
+                            <option value="3">&nbsp;&nbsp;3.共享文件&nbsp;&nbsp;
+                            </option>
+                            <option value="4">
+                              &nbsp;&nbsp;4.共享html区域&nbsp;&nbsp;
+                            </option>
+                            <option value="5">
+                              &nbsp;&nbsp;5.自定义推流&nbsp;&nbsp;
+                            </option>
+                          </select> &nbsp;&nbsp;
+                          <!--  输入框  -->
+                          <input id="v_file5" type="file" hidden />
+                          <br>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <button id="publishMediaButton5" class="css-3d-btn"
+                            onclick="publishMedia(5)">&nbsp;&nbsp;发布&nbsp;&nbsp;
+                          </button> &nbsp;
+                          <button id="streamChange5" class="css-3d-btn"
+                            onclick="streamChange(5)">&nbsp;&nbsp;切流&nbsp;&nbsp;
+                          </button> &nbsp;
+                          <button id="unPublish5" class="css-3d-btn"
+                            onclick="unPublish(document.getElementById('publish_video5').name)">
+                            &nbsp;&nbsp;取消&nbsp;&nbsp;
+                          </button> &nbsp;
+                          <br>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <label text="picture_type">截屏图片类型:</label>
+                          <select name="select" id="local_picture_type" class="xla_k">
+                            <option value="1">&nbsp;&nbsp;png&nbsp;&nbsp;
+                            </option>
+                            <option value="2">&nbsp;&nbsp;jpeg&nbsp;&nbsp;
+                            </option>
+                          </select>
+                          <button id="takePictureBtn5" class="css-3d-btn">&nbsp;&nbsp;本地截屏&nbsp;&nbsp;
+                          </button>
+                          <br>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </td>
+    </tr>
     <!--房间与会者列表信息-->
     <tr>
       <td>
-        <div id="part-of-screen-to-be-shared">
+        <div>
           <button class="button green rarrow" onclick="show('a4')" style="width:180px">【房间与会者列表信息】
           </button>
           <div id="a4" style="display:none">
@@ -520,30 +620,48 @@
       <td>
         <button class="button green rarrow" onclick="show('a5')" style="width:110px">【订阅窗口】</button>
 
-        <div id="a5" class="clearfix" style="display:none">
-          <select name="subscribeNumber" id="subscribeNumber" class="xla_k">
-            <option value=1>&nbsp;1&nbsp;</option>
-            <option value=2>&nbsp;2&nbsp;</option>
-            <option value=3>&nbsp;3&nbsp;</option>
-            <option value=4>&nbsp;4&nbsp;</option>
-            <option selected value=5>&nbsp;5&nbsp;</option>
-            <option value=6>&nbsp;6&nbsp;</option>
-            <option value=7>&nbsp;7&nbsp;</option>
-            <option value=8>&nbsp;8&nbsp;</option>
-            <option value=9>&nbsp;9&nbsp;</option>
-          </select>&nbsp;
-          <button id="updateSubscribeVideoAmount" class="css-3d-btn">&nbsp;变更视频窗口数量&nbsp;</button>
-          <div class="subscribeVideo clearfix"></div>
-          <br>
-          <input type="number" id="subscribeAudioNumber" value=3 hidden>
-          <!-- <button id="updateSubscribeAudioAmount" class="css-3d-btn">&nbsp;变更音频窗口数量&nbsp;</button> -->
-          <div class="subscribeAudio clearfix"></div>
+        <div id="a5" style="display:none">
+          <input type="number" id="subscribeNumber" value=3>
+          <button id="updateSubscribeAmount" class="css-3d-btn">&nbsp;变更窗口数量&nbsp;</button>
+          <div style="float:left;width:100%;height:33%;border:0.1px solid"></div>
         </div>
         <br>
       </td>
     </tr>
+    <!--点播-->
+    <tr>
+      <td>
+        <button class="button green rarrow" onclick="show('a6')" style="width:80px">【点播】</button>
+        <div id="a6" style="display:none">
+          <div>
+            <table width="1000">
+              <tr>
+                <td>
+                  &nbsp;
+                  <label text="vod_timeout">开启点播超时时间(秒):</label>
+                  <input type="text" id="vod_timeout" value="5" style="width:20px;" />&nbsp;
 
-    <!--录制窗口-->
+                  <label text="vod_file">点播文件url:</label>
+                  <input type="text" id="vod_file" placeholder="请输入点播文件URL" style="width:580px;" />
+                  <br>&nbsp;
+
+                  <button id="start_vod" class="css-3d-btn"
+                    onclick="startVod(document.getElementById('vod_file').value)">
+                    &nbsp;&nbsp;开启点播&nbsp;&nbsp;
+                  </button>
+                  <button id="stop_vod" class="css-3d-btn"
+                    onclick="stopVod()">&nbsp;&nbsp;停止点播&nbsp;&nbsp;</button>&nbsp;
+                  <label id="vod_id_text" class="css-text-color">点播id:</label>
+                  <label id="vod_id" class="css-text-color" style="width: 400px"></label>
+                </td>
+              </tr>
+            </table>
+          </div><br>
+        </div>
+      </td>
+    </tr>
+
+    <!--    录制窗口-->
     <tr>
       <td>
         <button class="button green rarrow" onclick="show('a7')" style="width:110px">【录制窗口】</button>
@@ -773,9 +891,8 @@
 <script>
 
 </script>
-<script type="text/javascript" src="https://gw.alipayobjects.com/os/lib/jquery/3.5.1/dist/jquery.min.js"></script>
-
 <!-- 全局通过script引用 -->
+<script type="text/javascript" src="https://gw.alipayobjects.com/os/lib/jquery/3.5.1/dist/jquery.min.js"></script>
 <script src="./lib/adapter.js"></script>
 <script src="./lib/getMediaInfo.js"></script>
 <script src="./lib/beauty/beauty.js"></script>
@@ -786,9 +903,9 @@
 <script src="./lib/pdf.js"></script>
 <script src="./lib/EBML.js"></script>
 <script src="./lib/dom-to-image.js"></script>
+<script src="./lib/html2canvas.js"></script>
 <script src="./lib/eruda.js"></script>
 <script src="https://gosspublic.alicdn.com/aliyun-oss-sdk-6.17.1.min.js"></script>
-<!-- 此处根据开发和正式版本不同引入方式 -->
 
 <!-- file引用 -->
 <script src="./lib/mcu.js"></script>
@@ -834,11 +951,28 @@
     }
   }
 
-  let subscribeVideoAmount = 0;
-  let subscribeAudioAmount = 0;
-  createSubscribeVideoDiv();
-  createSubscribeAudioDiv();
-
+  //双人模式
+  window.duetMode = function () {
+    if (room_state) {
+      alert("请先退出房间");
+      return;
+    }
+    if (document.all("subscribe").style.display == 'block') {
+      duet = true;
+      document.all("subscribe").style.display = 'none';
+    }
+    //双人通话,展示发布框的右侧信息
+    alwaysShow("duet_subscribe");
+    let publishWindow = document.getElementById("publish_window");
+    publishWindow.innerText = "【发布订阅窗口】";
+    publishWindow.style.width = '130px';
+    alwaysShow("a0");
+    alwaysShow("a1");
+    alwaysShow("a2");
+    $("#a5>div").html("");
+  }
+  let subscribeAmount = 3;
+  createSubscribeDiv();
   //多人模式
   window.multiplayerMode = function () {
     if (room_state) {
@@ -846,106 +980,53 @@
       return;
     }
     if (document.all("subscribe").style.display == 'none') {
+      duet = false;
       document.all("subscribe").style.display = 'block';
       document.all("subscribe").style.border = "none";
     }
+    //多人通话,隐藏发布框的右侧信息
+    alwaysNone("duet_subscribe");
     let publishWindow = document.getElementById("publish_window");
     publishWindow.innerText = "【发布窗口】";
     publishWindow.style.width = '110px';
     alwaysShow("a0");
     alwaysShow("a1");
     alwaysShow("a2");
+    createSubscribeDiv();
   };
   //增加多人订阅窗口
-  function createSubscribeVideoDiv() {
-    $("#a5>div.subscribeVideo").html("");
-    subscribeVideoAmount = $("#subscribeNumber").val();
-    let container = $("#a5>div.subscribeVideo");
-    for (let i = 1; i <= subscribeVideoAmount; i++) {
-      let htmlStr = `<div>
-                        <div class="videoBox" style="width:100%;height:60%;">
-                            <video id="video${i}" autoplay playsinline muted="true" webkit-playsinline="true" playsinline="true">video</video>
-                            <span class="ratio" id="ratio${i}"></span>
-                        </div>
-                        <div style="width:100%;height:40%;">
-                            <button class="css-3d-btn" onclick="takePictureRemoteBtn(document.getElementById('video${i}').name, 'png')">&nbsp;截屏&nbsp;</button>
-                            <button class="css-3d-btn img-fullscreen" onclick="requestFullScreen(document.getElementById('video${i}'))">&nbsp;全屏&nbsp;</button>
-                            <select class="streamList" id="streamList${i}">
-                              <option value="">空屏</option>
-                            </select>
-                            <button onClick="SwitchTrack('video${i}', 'streamList${i}')">切换</button>
-                            <select id="display${i}">
-                              <option value="big">高</option>
-                              <option value="medium">中</option>
-                              <option value="small">低</option>
-                            </select>
-                            <button onClick="SwitchDisplay('display${i}')">切换大小屏</button>
-                            <br/>
-                            <label type="text">&nbsp;&nbsp;uid:</label>
-                            <label class="uid css-text-color" id="uid${i}" type="text"></label><br/>
-                            <label type="text">&nbsp;&nbsp;VideoSubSsrc:</label>
-                            <label class="video_sub_ssrc css-text-color" id="video_sub_ssrc${i}" type="text"></label><br/>
-                            <label type="text">&nbsp;&nbsp;VideoPubSsrc:</label>
-                            <label class="video_pub_ssrc css-text-color" id="video_pub_ssrc${i}" type="text"></label><br/>
-                            <label type="text">&nbsp;&nbsp;feedId:</label>
-                            <label class="feed_id css-text-color" id="feedId${i}" type="text"></label><br/>
-                        </div>
-                    </div>`;
-      container.append(htmlStr);
+  function createSubscribeDiv() {
+    $("#a5>div").html("");
+    subscribeAmount = $("#subscribeNumber").val();
+    let container = $("#a5>div");
+    for (let i = 1; i <= subscribeAmount; i++) {
+      let htmlStr = `<div style="float:left;width:25%;height:100%;border:0.1px solid">
+                              <div style="float:left;width:100%;height:60%;border:0.1px solid">
+                                  <canvas id="subscribe_volumeView${i}" width="20%" height="100%"></canvas>
+                                  <video id="video${i}" autoplay playsinline muted="true" width="80%" height="100%"
+                                      webkit-playsinline="true" playsinline="true">video</video>
+                                  <audio id="audio${i}" autoplay>音频</audio>
+                                  <br>
+                                  <label type="text">&nbsp;&nbsp;feedId:</label>
+                                  <label id="feedId${i}" class="css-text-color" type="text"></label>
+                                  <br>
+                                  <label type="text">&nbsp;&nbsp;streamId:</label>
+                                  <label id="subscribe_streamId${i}" class="css-text-color" type="text"></label>
+                              </div>
+                              <div style="float:left;width:100%;height:40%;border:0.1px solid">
+                                  <button class="css-3d-btn"
+                                      onclick="takePictureRemoteBtn(document.getElementById('video${i}').name, 'png')">&nbsp;截屏&nbsp;</button>
+                                  <button class="css-3d-btn"
+                                      onclick="unSubscribeButton(document.getElementById('video${i}').name || document.getElementById('audio${i}').name)">&nbsp;取消订阅&nbsp;</button>
+                                  <button class="css-3d-btn img-fullscreen"
+                                      onclick="requestFullScreen(document.getElementById('video${i}'))">&nbsp;全屏&nbsp;</button>
+                              </div>
+                          </div>
+            `
+      container.append(htmlStr)
     }
-  };
-  function createSubscribeAudioDiv() {
-    subscribeAudioAmount = $("#subscribeAudioNumber").val();
-    $("#a5>div.subscribeAudio").html("");
-    let container = $("#a5>div.subscribeAudio");
-    for (let i = 1; i <= subscribeAudioAmount; i++) {
-      let htmlStr =
-        `<div style="float:left;width:25%;height:100%;border:0.1px solid">
-          <canvas class="volumeView" id="subscribe_volumeView${i}" width="100" height="100"></canvas>
-          <audio id=audio${i} autoplay></audio>
-          <button class="css-3d-btn muteBtn" onClick="muteMeetingAudio('audio${i}')">&nbsp;静音&nbsp;</button>
-          <div class="data">
-            <label type="text">&nbsp;&nbsp;uid:</label>
-            <label class="uid css-text-color" id="audio_uid${i}" type="text"></label><br/>
-            <label type="text">&nbsp;&nbsp;AudioSubSsrc:</label>
-            <label class="audio_sub_ssrc css-text-color" id="audio_sub_ssrc${i}" type="text"></label><br/>
-            <label type="text">&nbsp;&nbsp;AudioPubSsrc:</label>
-            <label class="audio_pub_ssrc css-text-color" id="audio_pub_ssrc${i}" type="text"></label><br/>
-            <label type="text">&nbsp;&nbsp;feedId:</label>
-            <label class="feed_id css-text-color" id="feedId${i}" type="text"></label><br/>
-          </div>
-        </div>`;
-      container.append(htmlStr);
-    }
-
-  };
-
-  window.SwitchTrack = function (domId, streamListId) {
-    test_controller.SwitchTrack([{ video_dom_id: domId, pub_feed: $("#" + streamListId).val() }])
-  };
-  let displayTimerObj = {};
-  window.SwitchDisplay = function (display) {
-    let size = $('#' + display).val();
-    let sub_ssrc = Number($('#' + display).parent().find(".video_sub_ssrc").text());
-    if (displayTimerObj[display]) {
-      clearInterval(displayTimerObj[display])
-    }
-    displayTimerObj[display] = setInterval(() => {
-      let video = $("#" + display).parent().parent().find("video")[0];
-      $('#' + display).parent().parent().find(".ratio").text(video.videoWidth + "x" + video.videoHeight);
-    }, 2000);
-    let commands = {
-      display: [
-        {
-          sub_ssrc,
-          size
-        }
-      ]
-    };
-    test_controller.SwitchDisplay(commands);
   }
-  $('#updateSubscribeVideoAmount').on("click", createSubscribeVideoDiv);
-  $('#updateSubscribeAudioAmount').on("click", createSubscribeAudioDiv);
+  $('#updateSubscribeAmount').on("click", createSubscribeDiv);
   //设置元素展示
   function alwaysShow(c_Str) {
     document.all(c_Str).style.display = 'block';
@@ -959,14 +1040,7 @@
   function alwaysNone(c_Str) {
     document.all(c_Str).style.display = 'none';
   }
-  window.muteMeetingAudio = function (id) {
-    if (document.getElementById(id).muted) {
-      $('#' + id).parent().find(".muteBtn").text('\xa0静\xa0音\xa0');
-    } else {
-      $('#' + id).parent().find(".muteBtn").text('\xa0播\xa0放\xa0');
-    }
-    document.getElementById(id).muted = !document.getElementById(id).muted;
-  }
+
   //调整publish_device1的值
   window.publishDeviceChange1 = function () {
     let publishDevice = $("#publish_device").val();
@@ -1024,6 +1098,9 @@
   const localVideo = document.getElementById('publish_video1');
   let publish_device = parseInt($("#publish_device").val());
 
+  //默认双人模式
+  let duet = true;
+  // let asr_procType = 8;
   let client_cost_time = 0;
   let stream_duration_timer = -1;
   let mediaInfo;
@@ -1052,9 +1129,6 @@
     publish_device = 1;
   }
 
-  //默认多人模式
-  multiplayerMode();
-
   // ###### 建立连接/断开连接 ######
   // 建立连接
   $("#connectButton").click(function () {
@@ -1070,6 +1144,7 @@
     let select_room = $("#select_room").val();
 
     let config_param = {};
+    config_param.log = true;
     config_param.uid = uid;
     config_param.biz_name = biz_name;
     config_param.sub_biz = sub_biz;
@@ -1078,7 +1153,7 @@
     config_param.sign = getSign(uid);
     // 允许最大断网时间 (超过未重连, 直接关闭)
     config_param.network_check_timeout = 120 * 1000;
-    // config_param.log = false;
+    config_param.logCacheMaxLines = 200;
     test_controller.Connect(config_param);
   });
 
@@ -1194,10 +1269,10 @@
   test_controller.StreamFilterHandler = async function (publish_tag, stream, stream_type, publish_device, media_type) {
     this.trace(`stream processed by client, publish_device=${publish_device}, media_type=${media_type}, publish_tag=${publish_tag},stream_type=${stream_type}`);
     if (stream_type == "subscribe") {
-      return stream
+      return stream;
     }
     if (media_type == 2 || media_type == 4) {
-      return stream
+      return stream;
     }
     // if (publish_device != 1) {
     //   return stream
@@ -1211,7 +1286,7 @@
       if (!$('#blurURL').val()) {
         alert("请提供图片背景URL");
       } else {
-        newStream = await initBackgroundBlur(stream)
+        newStream = await initBackgroundBlur(stream);
         newStream = new MediaStream([newStream.getVideoTracks()[0]]);
       }
     }
@@ -1254,18 +1329,27 @@
 
     //分业务模式传入订阅参数
     let initSubscribe;
-    initSubscribe = [];
-    for (let i = 1; i <= subscribeVideoAmount; i++) {
-      initSubscribe.push({
-        subscribe_video_id: "video" + i,
-        subscribe_audio_id: "audio" + i,
-        subscribe_streamId_id: "subscribe_streamId" + i,
-        feedId_id: "feedId" + i
-      })
+    if (duet) {
+      initSubscribe = [{
+        subscribe_video_id: "video0",
+        subscribe_audio_id: "audio0",
+        subscribe_streamId_id: "subscribe_streamId0",
+        feedId_id: "feedId0"
+      }];
+    } else {
+      initSubscribe = [];
+      for (let i = 1; i <= subscribeAmount; i++) {
+        initSubscribe.push({
+          subscribe_video_id: "video" + i,
+          subscribe_audio_id: "audio" + i,
+          subscribe_streamId_id: "subscribe_streamId" + i,
+          feedId_id: "feedId" + i
+        })
+      }
     }
     config_param.enableVideo = $('#enableVideo').prop("checked");
     config_param.enableAudio = $('#enableAudio').prop("checked");
-    config_param.enableDataChannel = $('#enableDataChannel').prop("checked");
+    config_param.enableDatachannel = $('#enableDatachannel').prop("checked");
     config_param.subscribeEnableVideo = $('#subscribeEnableVideo').prop("checked");
     config_param.subscribeEnableAudio = $('#subscribeEnableAudio').prop("checked");
     config_param.subscribeEnableDatachannel = $('#subscribeEnableDatachannel').prop("checked");
@@ -1381,28 +1465,24 @@
       && config_param.publish_device == 1) {
       test_controller.PreOpenLocalMedia(config_param);
     }
-    // datachannel
+
     config_param.enableDataChannel = $("#enableDataChannel").prop("checked");
-    // engine
     config_param.engine = parseInt($("#engine").val());
-    // simulcast
-    config_param.simulcast = document.getElementById("simulcast").checked;
-    // SVC
     config_param.scalabilityMode = $("#scalabilityMode").val();
-    // meeting params
-    config_param.room_mode = 2;
-    if (config_param.room_mode == 2) {
-      let meeting_param = {};
-      meeting_param.video_dom_list = [];
-      for (let i = 0; i < subscribeVideoAmount; i++) {
-        meeting_param.video_dom_list.push('video' + (i + 1));
-      }
-      meeting_param.audio_dom_list = ['audio1', 'audio2', 'audio3'];
-      config_param.meeting_param = meeting_param;
+
+    // sipUrl
+    if (parseInt($("#invitation_channel_type").val()) == 2 && $("#invitee").val()) {
+      config_param.sipUrl = $("#invitee").val();
     }
+    // rtmp url
+    window.rtmpPushUrl = $("#rtmpPushUrl").val();
+    window.rtmpPullUrl = $("#rtmpPullUrl").val();
+    // localVideoSwitch
+    config_param.localVideoSwitch = true;
     // InitRoomConfig
     test_controller.InitRoomConfig(config_param);
   }
+
   // 初始化成功回调
   test_controller.OnInitRoomConfigOK = function () {
     if (role == "caller") {
@@ -1438,6 +1518,13 @@
     alwaysShow("a2");
     alwaysShow("a3");
     alwaysShow("a4");
+    // 自动邀请
+    let invitee = $("#invitee").val();
+    if (invitee) {
+      let invitationChannelType = parseInt($("#invitation_channel_type").val());
+      let invitationLink = $("#invitation_link").val();
+      test_controller.Invite(invitee, invitationChannelType, invitationLink);
+    }
   };
 
 
@@ -1507,8 +1594,9 @@
       media_inviteInfo.audioEnable = inviteInfo.audioEnable;
       media_inviteInfo.videoEnable = inviteInfo.videoEnable;
     }
-
-    if (confirm("用户[" + inviter + "]邀请你加入房间[" + room_id + "], 是否接受?")) {
+    // 自动接听
+    let autoReplyInvite = document.getElementById("autoReplyInvite").checked;
+    if (autoReplyInvite || confirm("用户[" + inviter + "]邀请你加入房间[" + room_id + "], 是否接受?")) {
       role = "callee";
       document.getElementById("room_id").value = room_id;
       document.getElementById("rtoken").value = rtoken;
@@ -1548,6 +1636,8 @@
 
     document.getElementById("streamId_text").style.display = "none";
 
+    // clearTtsInfo();
+
     if (publish_device == 3) {
       localVideo.src = "";
     }
@@ -1572,26 +1662,6 @@
     alwaysShow("a0");
     alwaysShow("a1");
     alwaysShow("a2");
-    for (let i = $(".streamList").eq(0).find("option").length - 1; i > 0; i--) {
-      for (let j = 0; j < $(".streamList").length; j++) {
-        $(".streamList").eq(j).find("option").eq(i).remove();
-      }
-    }
-    let video_dom_list = []
-    for (let i = 0; i < subscribeVideoAmount; i++) {
-      video_dom_list.push('video' + (i + 1));
-    }
-    let audio_dom_list = ['audio1', 'audio2', 'audio3'];
-    video_dom_list.forEach(video_dom_id => {
-      $("#" + video_dom_id).parent().parent().find(".css-text-color").text("")
-    });
-    audio_dom_list.forEach(audio_dom_id => {
-      $("#" + audio_dom_id).parent().find(".data").find(".css-text-color").text("")
-
-    });
-    for (let key in displayTimerObj) {
-      clearInterval(displayTimerObj[key])
-    }
   };
 
   //房间与会者列表信息
@@ -1612,7 +1682,6 @@
           result += "<td><button class='css-3d-btn' onclick='subscribeButton(\"" + publish.feedId + "\")'>订阅</button></td>";
           result += "</tr>";
           $("#participants_table tbody").append(result);
-          renderSwitchOptions({ uid: part.uid, feedId: publish.feedId })
         }
       }
     }
@@ -1627,16 +1696,6 @@
         otherUid = undefined;
       }
     });
-    //删除切流选项
-    for (let i = 0; i < $(".streamList option").length; i++) {
-      let item = $(".streamList option")[i];
-      let curUid = item.innerText.split("|")[0].trim()
-      if (curUid == uid) {
-        for (let j = 0; j < $(".streamList").length; j++) {
-          $(".streamList").eq(j).find("option").eq(i).remove()
-        }
-      }
-    };
   };
   //共享屏幕关闭
   test_controller.OnDesktopDisplayClosed = function () {
@@ -1683,7 +1742,7 @@
           bitrate: +$("#video_profile_diy_bitrate").val()
         }
       }
-      config_param.need_volume_analyser = true;
+      config_param.need_volume_analyser = false;
       config_param.enableDesktopAudio = $("#enableDesktopAudio").prop("checked");
     } else if (publish_device == 3) {
       //发布文件
@@ -1696,7 +1755,7 @@
           bitrate: +$("#video_profile_diy_bitrate").val()
         }
       }
-      config_param.need_volume_analyser = true;
+      config_param.need_volume_analyser = false;
       let file = document.getElementById('v_file' + count).files[0];
       if (!file) {
         alert("未选择文件");
@@ -1705,15 +1764,9 @@
       config_param.file = file;
       config_param.draw_file_video_2_canvas = document.getElementById('draw_file_video_2_canvas').checked;
     } else if (publish_device == 4) {
-      config_param.need_volume_analyser = true;
+      config_param.need_volume_analyser = false;
       //传入需要共享区域的id
-      config_param.part_of_screen_id = "part-of-screen-to-be-shared";
-      let partOfScreenId = config_param.part_of_screen_id;
-      let elementById = document.getElementById(partOfScreenId);
-      if (!partOfScreenId || !elementById) {
-        alert("未选定共享区域");
-        return;
-      }
+      config_param.part_of_screen_id = "a2";
     } else {
       setMediaInfo(config_param);
       config_param.video_profile_type = video_profile_type;
@@ -1729,7 +1782,8 @@
     config_param.publish_tag = document.getElementById("publish_tag").value;
     config_param.enableVideo = $('#enableVideo').prop("checked");
     config_param.enableAudio = $('#enableAudio').prop("checked");
-    config_param.enableDataChannel = $('#enableDataChannel').prop("checked");
+    config_param.enableDatachannel = $('#enableDatachannel').prop("checked");
+
     config_param.publish_device = publish_device;
     config_param.audioSource = audioInputSelect.value;
     config_param.videoSource = videoSelect.value;
@@ -1846,55 +1900,54 @@
 
 
   //订阅成功回调
-  test_controller.OnSubscribeSucc = function (feedId, sid, videoSsrcMap, audioSsrcMap) {
+  test_controller.OnSubscribeSucc = function (feedId, sid) {
+    test_controller.trace(`~~~~~~~~~~~~~ OnSubscribeSuccess  Response  , sid=${sid},feedId=${feedId}`);
     alwaysNone("a0");
     alwaysShow("a3");
-    alwaysShow("a4");
-    alwaysShow("a5");
-    videoSsrcMap && videoSsrcMap.forEach((value, key) => {
-      $("#" + key).parent().parent().find(".video_sub_ssrc").text(value);
-    });
-    audioSsrcMap && audioSsrcMap.forEach((value, key) => {
-      $("#" + key).parent().find(".audio_sub_ssrc").text(value);
-    })
-  };
-  //大方会议切换失败
-  test_controller.OnSwitchTrackFail = function (sid, code, msg) {
-    console.log(`~~~~~~~~~~~~~ OnSwitchTrack Failed, sid=${sid},code=${code},msg=${msg}`);
-  };
-  //大方会议切换成功
-  test_controller.OnSwitchTrackSucc = function (uid, feedId, pub_ssrc, dom_id) {
-    console.log(`~~~~~~~~~~~~~ OnSwitchTrack Success Response, uid=${uid},feedId=${feedId}, pub_ssrc=${pub_ssrc}, dom_id=${dom_id}`);
-    if (!uid) {
-      //切空屏关闭定时器
-      clearInterval(displayTimerObj[dom_id]);
+    if (duet) {
+      document.getElementById("subscribe_feedId_text0").style.display = "inline";
+      document.getElementById("subscribe_streamId_text0").style.display = "inline";
     }
-    $("#" + dom_id).parent().parent().find(".uid").text(uid);
-    $("#" + dom_id).parent().parent().find(".feed_id").text(feedId);
-    $("#" + dom_id).parent().parent().find(".video_pub_ssrc").text(pub_ssrc);
-    $("#" + dom_id).parent().parent().find(".ratio").text($("#" + dom_id)[0].videoWidth + "x" + $("#" + dom_id)[0].videoHeight);
-    if (!feedId) {
-      feedId = "";
-    }
-    let index = dom_id.replace("video", "");
-    for (let i = $("#streamList" + index).eq(0).find("option").length - 1; i > 0; i--) {
-      let item = $("#streamList" + index).eq(0).find("option")[i];
-      if (item.value == feedId) {
-        item.selected = true;
-        break;
-      }
+    //如果是双人模式,展示订阅窗口
+    if (!duet) {
+      alwaysShow("a4");
+      alwaysShow("a5");
+    };
+    if (duet) {
+      let mediaInfo = generateMediaInfo(sid);
+      subscribe_media_stat_timer_id = setInterval(() => {
+        test_controller.GetStats(mediaInfo).then(media_stat => {
+          let googAvailableRecvBandwidth = (media_stat["VideoBwe"]["googAvailableSendBandwidth"] / 1000).toFixed(2);
+          let googTransmitBitrate = (media_stat["VideoBwe"]["googTransmitBitrate"] / 1000).toFixed(2);
+          let ssrcVideoRecvLostRate = media_stat["ssrcVideoRecv"]["lostRate"];
+          let ssrcAudioRecvLostRate = media_stat["ssrcAudioRecv"]["lostRate"];
+          let weak_googAvailableRecvBandwidth = parseInt($("#weak_bitrate").val());
+          let weak_ssrcVideoRecvLostRate = parseInt($("#weak_video_lost_rate").val());
+          let weak_ssrcAudioRecvLostRate = parseInt($("#weak_audio_lost_rate").val());
+          let weak_str = "网络正常";
+          if (googAvailableRecvBandwidth < weak_googAvailableRecvBandwidth) {
+            weak_str = "当前网络不佳";
+          }
+          let str =
+            "视频码率:" + (media_stat.ssrcVideoRecv["bpsRecv"] / 1000).toFixed(2) + "kb; "
+            + "音频码率:" + (media_stat.ssrcAudioRecv["bpsRecv"] / 1000).toFixed(2) + "kb; "
+            + "视频丢包率:" + (ssrcVideoRecvLostRate == undefined ? "none" : ssrcVideoRecvLostRate + "%") + "; "
+            + "音频丢包率:" + (ssrcAudioRecvLostRate == undefined ? "none" : ssrcAudioRecvLostRate + "%") + "; "
+            + weak_str + "; "
+            + "当前编码格式:" + media_stat["ssrcVideoRecv"].googCodecName + "; "
+            + "分辨率:" + media_stat["ssrcVideoRecv"].resolution + "; "
+            + "帧率:" + media_stat["ssrcVideoRecv"].googFrameRateReceived;
+          document.getElementById("subscribe_media_stat1").innerText = str;
+        })
+      }, 2000)
     }
   };
-  //大方会议音频信息
-  test_controller.OnMeetingAudioInfo = function (audioArray) {
-    audioArray.forEach(audio => {
-      let { uid, feedId, pub_ssrc, dom_id } = audio;
-      console.log(`~~~~~~~~~~~~~ OnMeetingAudioInfo Success Response, uid=${uid},feedId=${feedId}, pub_ssrc=${pub_ssrc}, dom_id=${dom_id}`);
-      $("#" + dom_id).parent().find(".uid").text(uid)
-      $("#" + dom_id).parent().find(".feed_id").text(feedId)
-      $("#" + dom_id).parent().find(".audio_pub_ssrc").text(pub_ssrc)
-    });
-  };
+
+
+  test_controller.OnSubscribeRecvVideo = function (sid, feedId) {
+  }
+  test_controller.OnSubscribeRecvAudio = function (sid, feedId) {
+  }
   //有新发布推送,对表格做更新操作
   test_controller.OnNewPublish = function (feed) {
     let trTemp = $("<tr></tr>");
@@ -1904,11 +1957,7 @@
     trTemp.append("<td >" + feed.mediaSource + "</td>");
     trTemp.append("<td><button class='css-3d-btn' onclick='subscribeButton(\"" + feed.feedId + "\")'>订阅</button></td>");
     trTemp.appendTo("#participants_table tbody");
-    renderSwitchOptions({ uid: feed.uid, feedId: feed.feedId })
   };
-  function renderSwitchOptions(obj) {
-    $(".streamList").append(`<option value="${obj.feedId}">${obj.uid} | ${obj.feedId}</option>`)
-  }
   //有新加入的回调
   let otherUid;
   test_controller.OnNewJoinerIn = function (participant) {
@@ -1929,19 +1978,31 @@
     //设置订阅需要的参数
     let config_param = {};
     let index = 1;
-    for (var i = 1; i <= subscribeVideoAmount; i++) {
-      let sid = document.getElementById("video" + i).name;
-      if (!sid) {
-        index = i;
-        break;
+    if (!duet) {
+      for (var i = 1; i <= subscribeAmount; i++) {
+        let sid = document.getElementById("video" + i).name;
+        if (!sid) {
+          index = i;
+          break;
+        }
       }
     }
-    //订阅的时候的参数
-    config_param.subscribe_video_id = "video" + index;
-    config_param.subscribe_audio_id = "audio" + index;
-    config_param.subscribe_streamId_id = "subscribe_streamId" + index;
-    config_param.feedId_id = "feedId" + index;
-    config_param.need_volume_analyser = true;
+    //分业务模式传入订阅参数
+    if (duet) {
+      //订阅的时候的参数
+      config_param.subscribe_video_id = "video0";
+      config_param.subscribe_audio_id = "audio0";
+      config_param.subscribe_streamId_id = "subscribe_streamId0";
+      config_param.feedId_id = "feedId0";
+      config_param.need_volume_analyser = true;
+    } else {
+      //订阅的时候的参数
+      config_param.subscribe_video_id = "video" + index;
+      config_param.subscribe_audio_id = "audio" + index;
+      config_param.subscribe_streamId_id = "subscribe_streamId" + index;
+      config_param.feedId_id = "feedId" + index;
+      config_param.need_volume_analyser = true;
+    }
     config_param.feedId = feedId;
     config_param.subscribeEnableVideo = $('#subscribeEnableVideo').prop("checked");
     config_param.subscribeEnableAudio = $('#subscribeEnableAudio').prop("checked");
@@ -1979,7 +2040,11 @@
     clearInterval(publish_media_stat_timer_id);
     publish_media_stat_timer_id = -1;
     document.getElementById("publish_media_stat1").innerText = "";
-    clearStreamRemain()
+    clearStreamRemain();
+    if (publishVolumeTimerObj[sid] && publishVolumeTimerObj[sid] != -1) {
+      clearInterval(publishVolumeTimerObj[sid]);
+      publishVolumeTimerObj[sid] = -1;
+    }
   };
 
   //取消订阅成功回调
@@ -1987,6 +2052,11 @@
     this.trace(`~~~~~~~~~~~~  OnUnSubscribeSucc  response, sid=${sid}`);
     if (subscribe_media_stat_timer_id != -1) {
       clearInterval(subscribe_media_stat_timer_id);
+      document.getElementById("subscribe_media_stat1").innerText = "";
+    }
+    if (publishVolumeTimerObj[sid] && publishVolumeTimerObj[sid] != -1) {
+      clearInterval(publishVolumeTimerObj[sid]);
+      publishVolumeTimerObj[sid] = -1;
     }
   };
 
@@ -2008,7 +2078,7 @@
   }
 
   //推送取消发布信息
-  test_controller.OnUnPublish = function (feed, dom_ids) {
+  test_controller.OnUnPublish = function (feed) {
     let feedId = feed.feedId;
     //删除已取消的发布的订阅行
     $("#participants_table tbody tr").each(function () {
@@ -2016,27 +2086,6 @@
         $(this).remove();
       }
     });
-    //删除切流选项
-    for (let i = 0; i < $(".streamList option").length; i++) {
-      let item = $(".streamList option")[i];
-      if (item.value == feedId) {
-        for (let j = 0; j < $(".streamList").length; j++) {
-          $(".streamList").eq(j).find("option").eq(i).remove()
-        }
-      }
-    };
-
-    dom_ids.video.forEach(dom_id => {
-      $("#" + dom_id).parent().parent().find(".uid").text("");
-      $("#" + dom_id).parent().parent().find(".video_pub_ssrc").text("");
-      $("#" + dom_id).parent().parent().find(".feed_id").text("");
-    });
-    dom_ids.audio.forEach(dom_id => {
-      $("#" + dom_id).parent().find(".uid").text("");
-      $("#" + dom_id).parent().find(".audio_pub_ssrc").text("");
-      $("#" + dom_id).parent().find(".feed_id").text("");
-    })
-
   };
   //接收对端事件
   test_controller.OnParticipantEvent = function (participant_uid, event_code, event_msg, event_extra) {
@@ -2314,11 +2363,27 @@
     let publish_sid = document.getElementById('publish_video1').name || document.getElementById('publish_streamId1').name;
     //订阅的sid
     let subscribe_sids = [];
-    for (let i = 1; i <= subscribeVideoAmount; i++) {
-      let subscribe_sid = document.getElementById('video' + i).name || document.getElementById('audio' + i).name;
-      subscribe_sids.push(subscribe_sid);
+    let subscribe_sid, subscribe_sid1, subscribe_sid2;
+    if (duet) {
+      subscribe_sid = document.getElementById('video0').name || document.getElementById('audio0').name;
+    } else {
+      subscribe_sid = document.getElementById('video1').name || document.getElementById('audio1').name;
+      subscribe_sid1 = document.getElementById('video2').name || document.getElementById('audio2').name;
+      subscribe_sid2 = document.getElementById('video3').name || document.getElementById('audio3').name;
     }
-    return { publish_sid, subscribe_sids };
+    if (subscribe_sid) {
+      subscribe_sids.push(subscribe_sid)
+    };
+    if (subscribe_sid1) {
+      subscribe_sids.push(subscribe_sid1)
+    };
+    if (subscribe_sid2) {
+      subscribe_sids.push(subscribe_sid2)
+    }
+    return {
+      publish_sid,
+      subscribe_sids,
+    };
   }
 
   let localRecordStatus = false;
@@ -2332,6 +2397,8 @@
           <input class="inputNumber" type="number" value=0 style="width:50px;">
           <label text="watermark_time_y">y坐标:</label>
           <input class="inputNumber" type="number" value=0 style="width:50px;">
+          <label class="watermark_format">时间格式:</label>
+          <input type="text" value="%Y-%m-%d %H.%M.%S" style="width:160px;" class="watermark_format"></input>
           <label>Tag:</label>
           <input type="text" class="watermark_tag">
           <button class="deleteWatermark">删除</button>
@@ -2366,9 +2433,8 @@
           <input class="inputNumber" type="number" value=0 style="width:50px;">
           <label text="watermark_pic_url">图片地址:</label>
           <input type="text" style="width:200px;" />
-          <label class="watermark_tag_label">Tag:</label>
+          <label>Tag:</label>
           <input type="text" class="watermark_tag">
-
           <button class="deleteWatermark">删除</button>
         </div>`]
   let watermarkId = 0;
@@ -2560,15 +2626,12 @@
 
   //停止浏览器录制成功回调
   test_controller.OnClientStopRecordSuccess = function (url, blob, clientRecordId) {
-    this.trace(
-      `OnClientStopRecordSuccess: video url = ${url},blobSize=${blob.size} clientRecordId = ${clientRecordId}`
-    );
+    this.trace(`OnClientStopRecordSuccess: video url=${url}, clientRecordId=${clientRecordId}`);
     if (blob) {
+      this.trace(`OnClientStopRecordSuccess: blobSize=${blob.size}`);
       localRecordStatus = false;
       let clientRecordPreview = document.getElementById("clientRecordPreview");
       clientRecordPreview.src = URL.createObjectURL(blob);
-    } else {
-      console.debug("local blob is null");
     }
   };
 
@@ -2655,7 +2718,8 @@
           id: +(arr.eq(0).val()),
           xPosition: +(arr.eq(1).val()),
           yPosition: +(arr.eq(2).val()),
-          tag: arr.eq(3).val()
+          timeFormat: (arr.eq(3).val()),
+          tag: arr.eq(4).val()
         };
       } else if (type == "text") {
         // 文字水印
@@ -2758,7 +2822,8 @@
           id: +(arr.eq(0).val()),
           xPosition: +(arr.eq(1).val()),
           yPosition: +(arr.eq(2).val()),
-          tag: arr.eq(3).val()
+          timeFormat: (arr.eq(3).val()),
+          tag: arr.eq(4).val()
         };
       } else if (type == "text") {
         // 文字水印
@@ -2914,23 +2979,19 @@
   }
 
   //获取音量实时数据,音量可视化
-  test_controller.OnVolumeAnalyser = function (sid, analyser, dom_id) {
-    let volumeView
-    if (dom_id) {
-      volumeView = $("#" + dom_id).parent().find(".volumeView").attr("id")
+  let publishVolumeTimerObj = {};
+  test_controller.OnVolumeAnalyser = function (sid, analyser) {
+    let publish_sid = document.getElementById('publish_video1').name || document.getElementById('publish_streamId1').name;
+    let volumeView;
+    if (sid == publish_sid) {
+      volumeView = "publish_volumeView";
     } else {
-      let publish_sid = document.getElementById('publish_video1').name || document.getElementById('publish_streamId1').name;
-      let volumeView;
-      if (sid == publish_sid) {
-        volumeView = "publish_volumeView";
-      } else {
-        for (let i = 0; i <= subscribeAudioAmount; i++) {
-          console.log('video' + i)
-          let subscribeId = document.getElementById('video' + i).name || document.getElementById('audio' + i).name;
-          if (sid == subscribeId) {
-            volumeView = "subscribe_volumeView" + i
-            break;
-          }
+
+      for (let i = 0; i <= (duet ? 0 : subscribeAmount); i++) {
+        let subscribeId = document.getElementById('video' + i).name || document.getElementById('audio' + i).name;
+        if (sid == subscribeId) {
+          volumeView = "subscribe_volumeView" + i
+          break;
         }
       }
     }
@@ -2982,7 +3043,9 @@
     }
 
     draw();
-    requestAnimationFrame(test_controller.OnVolumeAnalyser.bind(this, sid, analyser, dom_id));
+    if (!publishVolumeTimerObj[sid]) {
+      publishVolumeTimerObj[sid] = setInterval(test_controller.OnVolumeAnalyser.bind(this, sid, analyser), 100);
+    }
   };
 
   // 开启点播
@@ -3087,7 +3150,7 @@
     publish_config.publish_device = publishDevice;
     publish_config.enableVideo = $('#enableVideo').prop("checked");
     publish_config.enableAudio = $('#enableAudio').prop("checked");
-    publish_config.enableDataChannel = $('#enableDataChannel').prop("checked");
+    publish_config.enableDatachannel = $('#enableDatachannel').prop("checked");
     publish_config.sid = sid;
     setMediaInfo(publish_config);
 
@@ -3118,12 +3181,6 @@
 
     } else if (publishDevice == 4) {
       publish_config.part_of_screen_id = "a2";
-      let partOfScreenId = publish_config.part_of_screen_id;
-      let elementById = document.getElementById(partOfScreenId);
-      if (!partOfScreenId || !elementById) {
-        alert("未选定共享区域");
-        return;
-      }
 
     } else if (publishDevice == 5) {
     }
@@ -3191,7 +3248,6 @@
   function getDevices() {
     test_controller.GetDevices();
   }
-
   //获取设备成功
   test_controller.OnGetDevicesSuccess = function (devicesInfo) {
     test_controller.trace(JSON.stringify(devicesInfo));
@@ -3210,6 +3266,7 @@
       local_video_height: originalMediaInfo.local_video_height,
       local_video_frame: originalMediaInfo.local_video_frame,
       local_video_bitrate: originalMediaInfo.local_video_bitrate,
+      stream_type: originalMediaInfo.stream_type,
       stat_interval_: 2,
       video_send_packets_base_: 0,
       video_recv_packets_base_: 0,
@@ -3226,7 +3283,7 @@
       video_send_bitrate_base_: 0,
       video_recv_bitrate_base_: 0,
       audio_send_bitrate_base_: 0,
-      audio_recv_bitrate_base_: 0
+      audio_recv_bitrate_base_: 0,
     };
     return mediaInfo;
   }
