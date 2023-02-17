@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>iframe嵌入的页面</h3>
+    <button onclick="iframeSendMsg()">iframe向Vue传消息</button>
+
+</body>
+
+<script type="text/javascript">
+    window.onload = function () {
+        iframeSendMsg();
+    }
+    // iframe向vue传递信息
+    function iframeSendMsg() {
+        window.parent.postMessage({
+            cmd: 'myIframe',
+            params: {
+                info: 'iframe向Vue传递的消息',
+            }
+        }, '*');
+    };
+    // iframe获取Vue传递过来的信息
+    window.addEventListener("message", getVueMsg);
+    function getVueMsg(event) {
+        const res = event.data;
+        if (res.cmd == 'myVue') {
+            console.log(res, '组件给iframe传递')
+        }
+    };
+    function triggerByVue(msg) {
+        console.log(msg)
+    }
+</script>
+
+</html>
