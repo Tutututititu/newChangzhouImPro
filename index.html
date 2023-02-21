@@ -99,6 +99,7 @@
             <button id="uploadLog" class="css-3d-btn">
               &nbsp;&nbsp;上传日志&nbsp;&nbsp;
             </button>
+            <button id="fefefe">点击我我我我我我我我我我我我我我</button>
             <br> &nbsp;
           </div>
         </div>
@@ -3046,6 +3047,9 @@
   $("#uploadLog").on("click", function () {
     test_controller.UploadLog()
   });
+  $("#fefefe").on('click', function () {
+    window.windowGetUserMediaFunc();
+  })
   test_controller.OnUploadLogSucc = function () {
     test_controller.trace(`upload log success demo`)
   };
