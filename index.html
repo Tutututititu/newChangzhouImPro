@@ -114,28 +114,27 @@
           <div id="callstart">
             &nbsp;
             <label text="biz_name:">bizName:</label>
-            <input type="text" id="biz_name" value="980AE3D6CAE1B348A442B19D59F39EF3" style="width:80px;" />&nbsp;
+            <input type="text" id="biz_name" value="meeting" style="width:80px;" />&nbsp;
 
             <label text="sub_biz:">subBiz/appId:</label>
-            <input type="text" id="sub_biz" value="D023482261553" style="width:80px;" />&nbsp;
+            <input type="text" id="sub_biz" value="test" style="width:80px;" />&nbsp;
 
             <label text="workspaceId:">workspaceId:</label>
-            <input type="text" id="workspaceId" value="product" style="width:70px;" />&nbsp;
+            <input type="text" id="workspaceId" value="default" style="width:70px;" />&nbsp;
 
-            <label text="uid:">uid:</label> <span>用这个: default</span>
-            <input type="text" value="default" id="uid" style="width:150px;" />&nbsp;
+            <label text="uid:">uid:</label>
+            <input type="text" id="uid" style="width:150px;" />&nbsp;
 
             <label text="room_server">房间服务器:</label>&nbsp;
             <select name="select" id="select_room" class="xla_k">
-              <option selected value="wss://miniapp.jscz.org.cn:7006/ws">&nbsp;私有化&nbsp;</option>
               <option value="wss://artvcroom.alipay.com/ws">&nbsp;生产环境(主站)&nbsp;</option>
-              <option  value="wss://artvcroomdev.dl.alipaydev.com/ws">&nbsp;开发环境(主站)&nbsp;</option>
+              <option selected value="wss://artvcroomdev.dl.alipaydev.com/ws">&nbsp;开发环境(主站)&nbsp;</option>
               <option value="wss://mrtc.mpaas.cn-hangzhou.aliyuncs.com/ws">&nbsp;非金生产(mpaas)&nbsp;</option>
               <option value="wss://room.mrtc-fin.cn-shanghai.aliyuncs.com/ws">&nbsp;金区生产(mpaas)&nbsp;</option>
             </select> &nbsp;
 
             <label text="new_sign:">签名:</label>
-            <input type="text" id="new_sign" style="width:100px;" value="" placeholder="请输入签名" />
+            <input type="text" id="new_sign" style="width:100px;" value="signature" placeholder="请输入签名" />
             <br> &nbsp;
 
             <button id="connectButton" class="css-3d-btn">&nbsp;&nbsp;连接&nbsp;&nbsp;</button> &nbsp;
@@ -308,7 +307,6 @@
           <button id="createButton" class="css-3d-btn">&nbsp;&nbsp;创建房间&nbsp;&nbsp;</button>&nbsp;
           <button id="joinButton" class="css-3d-btn">&nbsp;&nbsp;加入房间&nbsp;&nbsp;</button>&nbsp;
           <button id="endButton" class="css-3d-btn">&nbsp;&nbsp;退出房间&nbsp;&nbsp;</button>&nbsp;
-          <button id="endButtonA" class="css-3d-btn">&nbsp;&nbsp;发布桌面&nbsp;&nbsp;</button>&nbsp;
 
           <label type="text">&nbsp;&nbsp;是否在房间中:</label>
           <label id="join_room_state" type="text" class="css-text-color">否</label>
@@ -1529,12 +1527,6 @@
     }
     test_controller.LeaveRoom();
   });
-  // 再次发布
-  $("#endButtonA").click(function () {
-
-  });
-
-
 
 
   // 退出房间回调
@@ -1657,10 +1649,7 @@
 
   // 签名(通道建连/创建房间/加入房间需要)
   function getSign(uid, isRecord = false) {
-    console.log('1aaaaaaaa')
-    const res = test_controller.trace(`GetSign uid=${uid}`);
-    console.log(res, '11111');
-    console.log('2aaaaaaaa')
+    test_controller.trace(`GetSign uid=${uid}`);
     if ($("#biz_name").val() == "demo") {
       return 'signature';
     }
